@@ -1,0 +1,19 @@
+os: linux
+language: python
+python:
+- '3.7'
+dist: bionic
+compiler:
+- gcc
+install:
+- pip install conan
+before_script:
+- conan remote add bintray-mavsdk https://api.bintray.com/conan/mavsdk/conan --insert
+  --force
+- conan user --password $CONAN_API_KEY --remote bintray-mavsdk julianoes
+script:
+- "./build_linux.sh"
+- conan upload $(conan inspect --raw name .) --all --remote bintray-mavsdk --confirm
+env:
+  global:
+    secure: fDen6NJXgUdwP/w/lzQN6DyC8GWb6kg/LoEQ858t5Gny02yoRKRGwLxslExXMj7jamBWEphN7VAXFGCm2yYAlUYS26xDHktbMVdH/TE2s/XmTw1q16nTSLTlqgXsXYmQgGty4Q8KFEESZTyGCI1MHunphpo945V9xmu8CobhcJuqbJHtG8W+iaa40VUufN2wjh8fCnZ9wh85z3/mRaEXs6ts1EurQgYubrC2oMIy9NbfLGNde8AWGIj7M7SJhZXjKPb4L8Lyj/foZ08y2PIuYM6yVUfoudDUrHxBn3Kv4nOrz3fq+icAmSzPFyeSLEIjZmvSRMJPg0Tbidd/iRI06Vp/PVd07if3PnMFEdBrQSlgN+s9GEVlqv1cB7GoolcqH9V8gQ1VGpLa+DtiGsVhStUQwkisoQJl66qlgd2I3foJTDrWf1O6CFcP16IjmdZKvTx23RSCHg+tgcFKK22ZHbRdMqK2d0L5VTP6H7OXy0zalrWIJ+2cvrJRXPw7tHzfzBdJHEP6W5XUUfX1ZA9Vntq8fXTuOnsOBy18Qbte1HIKQCJ2z6kF/63puNYeZ3KxlW4EdJKDev2qNc5PnH6N/mh/wClpSP6o3YMj0l7sh51S++irwB9rcL+XAX9HHncZValLl4sP0a7zJDod1rjG0dpeAf5H2wdL0uWjUU88/dk=
